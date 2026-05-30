@@ -1,4 +1,4 @@
-# Resume Interview — Claude Code 模拟面试 Skill
+# AI Mock Interview — Claude Code 模拟面试 Skill
 
 一个通用的模拟面试技能，让 Claude 成为你的专属面试官。贴上简历，选择难度和风格，即可开始一轮轮真实模拟面试。
 
@@ -18,14 +18,14 @@
 ## 安装
 
 ```bash
-npx skills add junyuliang1222/resume-interview -g
+npx skills add junyuliang1222/ai-mock-interview -g
 ```
 
 或手动安装：
 
 ```bash
-mkdir -p ~/.claude/skills/resume-interview
-cp SKILL.md ~/.claude/skills/resume-interview/
+mkdir -p ~/.claude/skills/ai-mock-interview
+cp SKILL.md ~/.claude/skills/ai-mock-interview/
 ```
 
 ## 使用方式
