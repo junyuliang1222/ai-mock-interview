@@ -21,11 +21,18 @@
 npx skills add junyuliang1222/ai-mock-interview -g
 ```
 
-或手动安装：
+或手动安装（将 SKILL.md 放入 Claude Code 的 skills 目录）：
 
+**macOS / Linux：**
 ```bash
 mkdir -p ~/.claude/skills/ai-mock-interview
 cp SKILL.md ~/.claude/skills/ai-mock-interview/
+```
+
+**Windows：**
+```powershell
+mkdir %USERPROFILE%\.claude\skills\ai-mock-interview
+copy SKILL.md %USERPROFILE%\.claude\skills\ai-mock-interview\
 ```
 
 ## 使用方式
