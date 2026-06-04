@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mock Interview</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 背景装饰 -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+
+    <!-- 主容器 -->
+    <div class="app-container">
+
+        <!-- ====== 配置面板（初始显示） ====== -->
+        <div class="setup-panel glass" id="setupPanel">
+            <h2 class="setup-title">面试设置</h2>
+
+            <!-- 岗位类型 -->
+            <div class="setup-group">
+                <label class="setup-label">岗位类型</label>
+                <div class="segmented-row" data-key="roleType">
+                    <button class="seg-btn selected" data-value="技术岗">技术岗</button>
+                    <button class="seg-btn" data-value="业务岗">业务岗</button>
+                    <button class="seg-btn" data-value="创作岗">创作岗</button>
+                    <button class="seg-btn" data-value="研究岗">研究岗</button>
+                    <button class="seg-btn" data-value="通用">通用</button>
+                </div>
+            </div>
+
+            <!-- 难度档位 -->
+            <div class="setup-group">
+                <label class="setup-label">难度档位</label>
+                <div class="segmented-row" data-key="difficulty">
+                    <button class="seg-btn" data-value="日常实习生">日常实习</button>
+                    <button class="seg-btn" data-value="暑期实习生">暑期实习</button>
+                    <button class="seg-btn selected" data-value="校招生">校招生</button>
+                    <button class="seg-btn" data-value="研究生入学">研究生入学</button>
+                </div>
+            </div>
+
+            <!-- 面试风格 -->
+            <div class="setup-group">
+                <label class="setup-label">面试风格</label>
+                <div class="segmented-row" data-key="style">
+                    <button class="seg-btn" data-value="技术深挖">技术深挖</button>
+                    <button class="seg-btn selected" data-value="综合面试">综合面试</button>
+                    <button class="seg-btn" data-value="岗位自适应">岗位自适应</button>
+                </div>
+            </div>
+
+            <!-- 简历输入 -->
+            <div class="setup-group">
+                <label class="setup-label">简历内容（粘贴或上传 .txt/.md 文件，可选）</label>
+                <div class="resume-upload-row">
+                    <input type="file" id="resumeFileInput" class="file-input-hidden" accept=".txt,.md">
+                    <button class="upload-btn" id="uploadBtn" title="上传 .txt/.md 文件">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        <span>上传文件</span>
+                    </button>
+                    <span class="upload-hint">仅支持 .txt / .md，也可直接拖拽到输入框</span>
+                </div>
+                <textarea
+                    id="resumeInput"
+                    class="resume-textarea glass"
+                    placeholder="把你的简历粘贴到这里...&#10;&#10;例如：&#10;教育背景：XX大学 计算机科学 本科 2024届&#10;实习经历：XX公司 后端开发实习生&#10;项目经验：电商平台 API 网关..."
+                    rows="6"
+                ></textarea>
+            </div>
+
+            <button class="start-btn glass" id="startBtn">开始面试</button>
+            <!-- 测试用：预览报告效果
+            <button class="test-report-btn" id="testReportBtn">预览报告效果（测试用）</button>
+            -->
+        </div>
+
+        <!-- ====== 顶部标题栏（面试中显示） ====== -->
+        <header class="header glass" id="headerBar" style="display:none">
+            <h1 class="header-title">AI Mock Interview</h1>
+            <span class="header-subtitle">模拟面试官</span>
+            <button id="restartBtn" class="restart-btn" title="重新开始面试">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="23 4 23 10 17 10"/>
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                </svg>
+                <span>重新开始</span>
+            </button>
+            <div class="header-badge" id="headerBadge"></div>
+            <span class="token-counter" id="tokenCounter" title="本次面试累计 Token 消耗（含输入+输出）">Tokens: 0</span>
+        </header>
+
+        <!-- ====== 对话区域（面试中显示） ====== -->
+        <main class="chat-area glass" id="chatArea" style="display:none">
+            <div class="error-toast" id="errorToast" style="display:none">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <span id="errorToastText"></span>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <!-- 消息动态插入 -->
+            </div>
+            <div class="typing-indicator" id="typingIndicator" style="display:none">
+                <span></span><span></span><span></span>
+            </div>
+        </main>
+
+        <!-- ====== 输入区域（面试中显示） ====== -->
+        <footer class="input-area glass" id="inputArea" style="display:none">
+            <button id="endBtn" class="end-btn">结束面试</button>
+            <textarea
+                id="messageInput"
+                class="input-field"
+                placeholder="输入你的回答... (Enter 发送, Shift+Enter 换行)"
+                rows="1"
+            ></textarea>
+            <button id="sendBtn" class="send-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </footer>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
