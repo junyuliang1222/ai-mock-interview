@@ -75,6 +75,29 @@
                 ></textarea>
             </div>
 
+            <!-- 岗位 JD 输入 -->
+            <div class="setup-group">
+                <label class="setup-label">岗位 JD（粘贴或上传 .txt/.md/.tex 文件，可选）</label>
+                <div class="resume-upload-row">
+                    <input type="file" id="jdFileInput" class="file-input-hidden" accept=".txt,.md,.tex">
+                    <button class="upload-btn" id="jdUploadBtn" title="上传 .txt/.md/.tex 文件">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        <span>上传文件</span>
+                    </button>
+                    <span class="upload-hint">仅支持 .txt / .md / .tex，也可直接拖拽到输入框</span>
+                </div>
+                <textarea
+                    id="jdInput"
+                    class="resume-textarea glass"
+                    placeholder="把目标岗位的 JD 粘贴到这里（可选）...&#10;&#10;例如：&#10;岗位：后端开发工程师&#10;要求：3年以上 Python 经验，熟悉分布式系统、MySQL 优化..."
+                    rows="4"
+                ></textarea>
+            </div>
+
             <button class="start-btn glass" id="startBtn">开始面试</button>
             <!-- 测试用：预览报告效果
             <button class="test-report-btn" id="testReportBtn">预览报告效果（测试用）</button>

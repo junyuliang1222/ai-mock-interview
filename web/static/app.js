@@ -60,6 +60,42 @@ resumeInput.addEventListener("drop", (e) => {
     }
 });
 
+// ---------- JD 文件上传 ----------
+const jdInput = document.getElementById("jdInput");
+const jdFileInput = document.getElementById("jdFileInput");
+const jdUploadBtn = document.getElementById("jdUploadBtn");
+
+jdUploadBtn.addEventListener("click", () => jdFileInput.click());
+
+jdFileInput.addEventListener("change", () => {
+    const file = jdFileInput.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => { jdInput.value = e.target.result; };
+        reader.readAsText(file);
+    }
+});
+
+jdInput.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    jdInput.classList.add("drag-over");
+});
+
+jdInput.addEventListener("dragleave", () => {
+    jdInput.classList.remove("drag-over");
+});
+
+jdInput.addEventListener("drop", (e) => {
+    e.preventDefault();
+    jdInput.classList.remove("drag-over");
+    const file = e.dataTransfer.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => { jdInput.value = e.target.result; };
+        reader.readAsText(file);
+    }
+});
+
 // ---------- 分段按钮交互 ----------
 document.querySelectorAll(".segmented-row").forEach((row) => {
     row.addEventListener("click", (e) => {
@@ -83,8 +119,9 @@ messageInput.addEventListener("input", autoResize);
 
 // ---------- 开始面试 ----------
 startBtn.addEventListener("click", async () => {
-    // 读取简历内容
+    // 读取简历内容和 JD
     const resumeText = document.getElementById("resumeInput").value.trim();
+    const jdText = document.getElementById("jdInput").value.trim();
 
     // 读取用户选择
     interviewConfig = {
@@ -97,7 +134,7 @@ startBtn.addEventListener("click", async () => {
     headerBadge.textContent = `${interviewConfig.difficulty} · ${interviewConfig.roleType} · ${interviewConfig.style}`;
 
     // 构建 system prompt
-    const systemPrompt = buildSystemPrompt(interviewConfig, resumeText);
+    const systemPrompt = buildSystemPrompt(interviewConfig, resumeText, jdText);
 
     // 隐藏配置面板，显示面试界面
     setupPanel.classList.add("hidden");
@@ -147,7 +184,7 @@ function getSelected(key) {
 }
 
 // ---------- 构建 System Prompt ----------
-function buildSystemPrompt(config, resumeText) {
+function buildSystemPrompt(config, resumeText, jdText) {
     const difficultyGuide = {
         "日常实习生": `你是面试官，目标难度为「日常实习生」。核心考察学习能力——这个人学东西快不快？能不能迅速上手？
 追问力度：1-2 层，见好就收。整体语感：友善，更像交流。不要求答对所有问题，但看遇到不会的怎么应对。
@@ -198,6 +235,9 @@ ${styleGuide[config.style] || ""}
 
 ## 候选人简历
 ${resumeText ? `以下是候选人的简历内容，请围绕这些经历提问：\n"""\n${resumeText}\n"""\n如果候选人自我介绍或回答的内容与简历有出入，可以追问澄清。` : "候选人未提供简历。请先让候选人做自我介绍，根据自我介绍的内容来提问。"}
+
+## 目标岗位 JD
+${jdText ? `以下是候选人目标岗位的 JD，请围绕岗位要求提问，关注候选人的经历与 JD 的匹配度：\n"""\n${jdText}\n"""\n如果候选人的简历内容与 JD 要求存在差距，可以在面试中点出。` : "候选人未提供岗位 JD。请根据简历内容进行通用提问。"}
 
 ## 面试流程
 1. 先让候选人做 1 分钟自我介绍（暖场）
