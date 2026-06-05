@@ -117,7 +117,7 @@ def chat():
         response = deepseek.chat.completions.create(
             model="deepseek-chat",
             messages=data["messages"],
-            temperature=0.8,
+            temperature=0.6,
             max_tokens=2048,
         )
         reply = response.choices[0].message.content
