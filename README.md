@@ -61,6 +61,19 @@ copy SKILL.md %USERPROFILE%\.claude\skills\ai-mock-interview\
 
 面试官的容忍度随你的表现动态变化——答得好则宽容，答得差则压力累积。全部结束后给出结构化反馈。
 
+## Web 版
+
+除了 CLI 版本外，还提供一个浏览器端 Web 界面，支持上传简历/岗位 JD 文件：
+
+```bash
+# 一键启动（需要 conda sql-project 环境 + DEEPSEEK_API_KEY）
+bash ~/.claude/skills/ai-mock-interview/web/start.sh
+```
+
+启动后浏览器打开 **http://127.0.0.1:5001/** 即可使用。
+
+> 首次使用前需要先配置 API Key：在 `web/` 目录下创建 `.env` 文件，写入 `DEEPSEEK_API_KEY=你的key`。
+
 ## 难度档位对照
 
 | | 日常实习 | 暑期实习 | 校招 | 研究生入学 |
